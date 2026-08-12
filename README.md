@@ -1,16 +1,81 @@
-# React + Vite
+The portfolio focuses on clean UI, smooth animations, responsive design, and small interactive details that make the overall experience feel more engaging.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Live Demo
 
-Currently, two official plugins are available:
+Coming soon.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🛠️ Tech Stack
+React.js — Component-based UI development
+Tailwind CSS — Responsive styling and utility-first design
+GSAP — Smooth animations and interactive effects
+JavaScript — Application logic and interactions
+Vite — Development and build tooling
 
-## React Compiler
+✨ Features
+Responsive portfolio layout
+Interactive hero section
+Animated developer character
+Cursor-following character eyes
+Smooth GSAP animations
+Projects showcase
+Skills and technologies section
+About me section
+Contact section
+Responsive design for desktop, tablet, and mobile
+Modern dark-themed UI with custom animations
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+📂 Project Structure
+src/
+├── assets/
+├── components/
+│   ├── Hero.jsx
+│   ├── Navbar.jsx
+│   └── ...
+├── pages/
+├── App.jsx
+├── main.jsx
+└── ...
 
-## Expanding the ESLint configuration
+🎯 Purpose
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+I built this portfolio as a way to practice and demonstrate my frontend development skills through a real-world project rather than relying only on small practice applications.
+
+The project also gives me an opportunity to experiment with animations, responsive layouts, reusable React components, and interactive UI.
+
+📚 What I'm Learning
+
+While building this portfolio, I'm focusing on:
+
+Building reusable React components
+Improving responsive layouts with Tailwind CSS
+Creating smooth UI animations with GSAP
+Working with SVGs and interactive elements
+Writing cleaner and more maintainable frontend code
+Improving overall UI/UX decisions
+🔮 Future Improvements
+
+Some features I plan to add as the portfolio develops:
+
+Complete projects section
+
+Detailed project case studies
+
+About section
+
+Skills and technologies section
+
+Contact form
+
+Social links
+
+Page transition animations
+
+Improved mobile animations
+
+Deploy the portfolio
+
+Add more interactive micro-interactions
+
+📬 Contact
+
+If you'd like to connect, collaborate, or discuss a project, feel free to reach out through the contact section of my portfolio.

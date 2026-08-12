@@ -1,8 +1,8 @@
 
 const Testimonials = () => {
   return (
-    <div className="p-24 bg-linear-to-r from-gray-950 via-black to-gray-950 text-white">
-      <h1 className="text-3xl font-bold mb-6">
+    <section id="testimonials" className="p-24 bg-linear-to-r from-gray-950 via-black to-gray-950 text-white">
+      <h1 className="text-3xl text-lime-300 font-bold mb-6">
         What people say
       </h1>
     <div className="grid grid-cols-3 gap-6">
@@ -19,8 +19,13 @@ const Testimonials = () => {
           </div>
       
         <div className="flex flex-col ">
-          <h2>Sara Chen</h2>
-          <p className="text-sm">Head of Product, Vanta</p>
+          <h2>
+            Sara Chen
+          </h2>
+          
+          <p className="text-sm">
+            Head of Product, Vanta
+          </p>
         </div>
           
         </div>
@@ -70,7 +75,7 @@ const Testimonials = () => {
             </div>
         </div>
 
-    </div>
+    </section>
   );
 }
 
