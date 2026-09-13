@@ -1,37 +1,43 @@
-
 const Footer = () => {
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer id="footer" className="bg-black text-white p-12 flex justify-between items-center">
-      
-      <h3 className="pl-8 text-sm">
-        &copy; 2026 Suyog Bastakoti - All Rights Reserved
-      </h3>
+    <footer className="border-t border-border px-5 py-8 sm:px-8 md:px-12 lg:px-20 xl:px-24">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-muted">
+          &copy; 2026 Suyog Bastakoti — Built With Care
+        </p>
 
-      <div className="flex gap-6 text-sm font-semibold">
-        <a href="website" className="hover:text-lime-400 transition">My Portfolio</a>
-        <a href="https://github.com/suyogbastakoti" className="hover:text-lime-400 transition">GitHub</a>
-        <a href="https://www.linkedin.com/in/suyog-bastakoti-a106a9225/" className="hover:text-lime-400 transition">LinkedIn</a>
+        <div className="flex flex-wrap items-center gap-5 text-sm">
+          <a
+            href="https://github.com/suyogbastakoti"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted transition hover:text-accent"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://www.linkedin.com/in/suyog-bastakoti-a106a9225/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted transition hover:text-accent"
+          >
+            LinkedIn
+          </a>
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="rounded-full border border-border px-3.5 py-1.5 text-sm font-medium text-text transition hover:border-accent/40 hover:bg-accent-soft"
+          >
+            Back to top
+          </button>
+        </div>
       </div>
-
-      <button
-        type="button"
-        onClick={() => scrollToSection("hero")}
-        className="mr-9 border text-sm px-3 py-2 cursor-pointer rounded-xl hover:bg-lime-300 font-bold hover:text-black shadow-md shadow-white"
-      >
-        Back to top
-      </button>
-
-
     </footer>
-
   );
-}
+};
 
-export default Footer
+export default Footer;

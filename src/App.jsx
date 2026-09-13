@@ -1,35 +1,28 @@
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
-import Testimonials from "./components/Testimonials";
-import Hero from "./components/Hero";
+import Footer from "./components/Footer";
+import { useReveal } from "./hooks/useReveal";
 
-function App(){
-  return(
-    <>
+function App() {
+  useReveal();
 
-    {/* Nav Section */}
-    <Navbar />
-    
-    {/* Hero Section */}
-    <Hero />
-
-    {/* Projects Section */}
-    <Projects />
-
-    {/* Testimonials Section*/}
-    <Testimonials />
-
-    {/* Contact Section */}
-    <Contact />
-    
-    {/* Footer Section */}
-    <Footer />
-
-    </>
+  return (
+    <div className="min-h-screen overflow-x-hidden">
+      <Navbar />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   );
-
-};
+}
 
 export default App;

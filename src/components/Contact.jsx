@@ -1,97 +1,234 @@
-
 import { useState } from "react";
 
+const EMAIL = "suyog017@gmail.com";
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [status, setStatus] = useState("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const recipient = "suyog017@gmail.com";
-    const subject = encodeURIComponent(
-      `Portfolio inquiry from ${formData.name || "a visitor"}`
-    );
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
+    const form = event.currentTarget;
+    const data = new FormData(form);
 
-    // Open Gmail web compose with prefilled values in a new tab.
-    // If the user isn't signed in, Gmail will prompt for sign-in first.
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-      recipient
-    )}&su=${subject}&body=${body}`;
+    const name = String(data.get("name") || "").trim();
+    const email = String(data.get("email") || "").trim();
+    const message = String(data.get("message") || "").trim();
 
-    window.open(gmailUrl, "_blank");
+    if (!name || !email || !message) {
+      setStatus("error");
+      setErrorMsg("Please fill in all fields.");
+      return;
+    }
+
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _subject: `Portfolio message from ${name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to send message.");
+      }
+
+      form.reset();
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.",
+      );
+    }
   };
 
   return (
-    
-    <section id="contact" className="p-24 bg-gray-900 flex justify-between items-center gap-6">
-      <div className="text-white w-1/5 min-w-lg">
-        <p className="text-lime-300 mb-6 text-xl">---- Get in Touch</p>
+    <section id="contact" className="section-pad">
+      <div className="container-narrow">
+        <div className="reveal glass overflow-hidden rounded-3xl border border-border p-6 shadow-[0_16px_50px_rgba(0,0,0,0.06)] sm:p-8 md:p-10 dark:shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
+          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+            <div>
+              <p className="mb-3 text-sm font-medium tracking-[0.16em] text-accent uppercase">
+                Get in Touch
+              </p>
+              <h2 className="font-display text-3xl font-bold tracking-tight text-text sm:text-4xl">
+                Let's build something great
+              </h2>
+              <p className="mt-4 max-w-md text-base leading-relaxed text-muted sm:text-lg">
+                Open for freelance projects, full-time roles, and interesting
+                collaborations. If you have something in mind, I'd love to hear
+                about it.
+              </p>
 
-        <h1 className="text-3xl mb-4 font-bold">Let's build something great</h1>
+              <div className="mt-8 flex flex-col gap-3">
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="group inline-flex items-center justify-between rounded-xl border border-border bg-card/70 px-4 py-3 text-sm font-medium text-text transition hover:border-accent/40 hover:bg-accent-soft"
+                >
+                  {EMAIL}
+                  <span
+                    className="text-muted transition group-hover:text-accent"
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                </a>
+                <a
+                  href="https://github.com/suyogbastakoti"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center justify-between rounded-xl border border-border bg-card/70 px-4 py-3 text-sm font-medium text-text transition hover:border-accent/40 hover:bg-accent-soft"
+                >
+                  GitHub
+                  <span
+                    className="text-muted transition group-hover:text-accent"
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/suyog-bastakoti-a106a9225/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center justify-between rounded-xl border border-border bg-card/70 px-4 py-3 text-sm font-medium text-text transition hover:border-accent/40 hover:bg-accent-soft"
+                >
+                  LinkedIn
+                  <span
+                    className="text-muted transition group-hover:text-accent"
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                </a>
+                <a
+                  href="resume"
+                  className="group inline-flex items-center justify-between rounded-xl border border-border bg-card/70 px-4 py-3 text-sm font-medium text-text transition hover:border-accent/40 hover:bg-accent-soft"
+                >
+                  Download Resume
+                  <span
+                    className="text-muted transition group-hover:text-accent"
+                    aria-hidden="true"
+                  >
+                    ↓
+                  </span>
+                </a>
+              </div>
+            </div>
 
-        <p className="mb-6 text-xl text-gray-400">
-          Open for freelance projects, full-time roles, and interesting collaborations.
-          If you have something in mind, I'd love to hear about it.
-        </p>
+            <form
+              onSubmit={handleSubmit}
+              className="rounded-2xl border border-border bg-card/80 p-5 sm:p-6"
+              noValidate
+            >
+              {/* Honeypot — leave empty; bots fill this */}
+              <input
+                type="text"
+                name="_honey"
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
 
-        <div className="flex flex-col space-y-2">
-          <a href="https://suyogbastakoti.com" className="hover:text-lime-400 transition">My Portfolio</a>
-          <a href="https://github.com/suyogbastakoti" className="hover:text-lime-400 transition">GitHub</a>
-          <a href="https://www.linkedin.com/in/suyog-bastakoti-a106a9225/" className="hover:text-lime-400 transition">LinkedIn</a>
+              <div className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-1.5 block text-sm font-medium text-text"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    required
+                    autoComplete="name"
+                    placeholder="Your Name"
+                    disabled={status === "loading"}
+                    className="w-full rounded-xl border border-border bg-bg/60 px-3.5 py-2.5 text-sm text-text placeholder:text-muted/80 transition focus:border-accent focus:outline-none disabled:opacity-60"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-1.5 block text-sm font-medium text-text"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    autoComplete="email"
+                    placeholder="your@email.com"
+                    disabled={status === "loading"}
+                    className="w-full rounded-xl border border-border bg-bg/60 px-3.5 py-2.5 text-sm text-text placeholder:text-muted/80 transition focus:border-accent focus:outline-none disabled:opacity-60"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="mb-1.5 block text-sm font-medium text-text"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    placeholder="Tell me about your project..."
+                    disabled={status === "loading"}
+                    className="w-full resize-y rounded-xl border border-border bg-bg/60 px-3.5 py-2.5 text-sm text-text placeholder:text-muted/80 transition focus:border-accent focus:outline-none disabled:opacity-60"
+                  />
+                </div>
+              </div>
+
+              {status === "success" && (
+                <p className="mt-4 text-sm text-accent" role="status">
+                  Message sent. I'll get back to you soon.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="mt-4 text-sm text-red-500" role="alert">
+                  {errorMsg}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-fg transition hover:-translate-y-0.5 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
+              >
+                {status === "loading" ? "Sending..." : "Send Message"}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-
-      <form onSubmit={handleSubmit} className="flex flex-col text-white min-w-md space-y-4 w-full max-w-xl">
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Your Name"
-          required
-          className="border p-2 rounded-xl"
-        />
-
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="your@email.com"
-          required
-          className="border p-2 rounded-xl"
-        />
-
-        <label>Message:</label>
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          placeholder="Tell me about your project..."
-          required
-          className="border px-2 py-12 rounded-xl"
-        />
-
-        <button 
-          type="submit" 
-          className="bg-lime-500 text-white hover:bg-lime-600 transition cursor-pointer w-1/3 py-2 rounded-xl"
-        >
-          Send Message
-        </button>
-      </form>
     </section>
   );
 };
